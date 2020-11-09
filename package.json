@@ -1,9 +1,62 @@
 {
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "eslint-config-airbnb-base": "^14.2.1",
     "eslint-plugin-import": "^2.22.1",
     "express": "^4.17.1",
     "mongoose": "^5.10.13",
     "readline-sync": "^1.4.10"
+  },
+  "name": "group-d",
+  "description": "Folder for the magnificient library application by group D",
+  "version": "1.0.0",
+  "main": "index.js",
+  "type": "module",
+  "devDependencies": {},
+  
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@gitlab.com:learncodefullstack2020/palautukset/group-d.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "eslintConfig": {
+    "extends": "airbnb-base",
+    "env": {
+      "es6": true,
+      "browser": true
+    },
+    "rules": {
+      "indent": [
+        "error",
+        4
+      ],
+      "max-len": [
+        "error",
+        {
+          "code": 100
+        }
+      ],
+      "quotes": [
+        "error",
+        "double"
+      ],
+      "operator-linebreak": [
+        "error",
+        "after"
+      ],
+      "import/extensions": [
+        "warn",
+        "ignorePackages"
+      ],
+      "no-console": [
+        "off"
+      ]
+    }
   }
+
 }
