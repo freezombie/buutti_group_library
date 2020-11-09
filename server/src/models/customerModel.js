@@ -8,7 +8,6 @@ const customerSchema = new mongoose.Schema({
     borrowed_books: [],
 });
 
-const customerModel = mongoose.model(
-    "customer", customerSchema);
+const customerModel = mongoose.model("customer", customerSchema);
 
 export default customerModel;

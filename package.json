@@ -1,14 +1,4 @@
 {
-  "name": "group-d",
-  "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
-  "type": "module",
-  "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
-},
-
   "dependencies": {
     "bcrypt": "^5.0.0",
     "eslint-config-airbnb-base": "^14.2.1",
@@ -21,10 +11,12 @@
   "description": "Folder for the magnificient library application by group D",
   "version": "1.0.0",
   "main": "index.js",
+  "type": "module",
   "devDependencies": {},
   
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js"
   },
   "repository": {
     "type": "git",

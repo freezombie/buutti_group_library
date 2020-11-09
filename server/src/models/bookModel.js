@@ -1,4 +1,3 @@
-import { stringify } from "json5";
 import mongoose from "mongoose";
 
 const bookSchema = new mongoose.Schema({
@@ -9,7 +8,6 @@ const bookSchema = new mongoose.Schema({
     copy_id: [],
 });
 
-const bookModel = mongoose.model(
-    "book", bookSchema);
+const bookModel = mongoose.model("book", bookSchema);
 
 export default bookModel;
