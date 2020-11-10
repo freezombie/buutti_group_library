@@ -1,5 +1,12 @@
 import mongoose from "mongoose";
 
+//Subdocument of bookSchema.
+const copySchema = new mongoose.Schema({
+    status: String,
+    due: Date,
+    borrower_id: Number,
+    reserveList: { reserverId: Number },
+});
 const bookSchema = new mongoose.Schema({
     isbn: String,
     title: String,
@@ -8,13 +15,6 @@ const bookSchema = new mongoose.Schema({
     pages: Number,
     description: String,
     copies: [copySchema],
-});
-//Subdocument of bookSchema.
-const copySchema = new mongoose.Schema({
-    status: String,
-    due: Date,
-    borrower_id: Number,
-    reserveList: { reserverId: Number },
 });
 
 const bookModel = mongoose.model("book", bookSchema);
