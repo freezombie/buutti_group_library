@@ -1,7 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
-//import accountRouter from "./routes/libraryrouter.js";
-import bookRouter from "./src/routes/bookRouter.js"
+import bookRouter from "./src/routes/bookRouter.js";
+import userRouter from "./src/routes/userRouter.js";
 
 const requestLogger = (req, res, next) => {
     console.log(`METHOD: ${req.method}`);
@@ -29,8 +29,8 @@ app.get("/", (req, res) => {
 });
 
 app.use(requestLogger);
-//app.use("/customers/", customersRouter);
 app.use("/book/", bookRouter);
+app.use("/users/", userRouter);
 
 app.listen(5000, () => {
     console.log("listening to port 5000");

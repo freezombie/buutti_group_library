@@ -1,0 +1,9 @@
+POST  http://localhost:5000/users/users/add/ HTTP/1.1
+Content-Type: application/json
+
+{
+        "name": "Lassi Lainaaja",
+        "email": "lassi@google.fi",
+        "password": "password",
+        "role": "customer"
+}
