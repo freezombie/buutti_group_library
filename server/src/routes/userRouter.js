@@ -1,11 +1,12 @@
 import express from "express";
 import {
-    newUser,
+    newUser, allUsers, editUser,
 } from "../controllers/userController.js";
 
 const userRouter = express.Router();
 
 userRouter.post("/users/add", newUser);
-// router.post("/users/edit", editUser);
+userRouter.get("/users/allusers", allUsers);
+userRouter.put("/users/edit", editUser);
 
 export default userRouter;
