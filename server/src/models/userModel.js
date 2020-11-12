@@ -1,13 +1,14 @@
 import mongoose from "mongoose";
 
-const customerSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     name: String,
     email: String,
     password: String,
+    role: String,
     borrow_history: [],
     borrowed_books: [],
 });
 
-const customerModel = mongoose.model("customer", customerSchema);
+const userModel = mongoose.model("user", userSchema);
 
-export default customerModel;
+export default userModel;
