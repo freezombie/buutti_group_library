@@ -38,3 +38,8 @@ export const getBook = async (req, res) => {
     }
     return res.json(book);
 };
+// Alla olveassa jostain syystä pakko olla req, muuten ei toimi.
+export const getBooks = async (req, res) => {
+    const books = await bookModel.find();
+    return res.json(books);
+};

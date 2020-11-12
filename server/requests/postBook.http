@@ -2,27 +2,22 @@ POST  http://localhost:5000/book/ HTTP/1.1
 Content-Type: application/json
 
 {
-        "isbn": "0679722769",
-        "title": "Ulysses",
-        "author": "James Joyce",
-        "published": "1922-02-02T00:00:00.000Z",
-        "pages": 730,
-        "description": "Ulysses is a modernist novel by Irish writer James Joyce. It was first serialised in parts in the American journal The Little Review from March 1918 to December 1920 and then published in its entirety in Paris by Sylvia Beach on 2 February 1922, Joyce's 40th birthday.",
-        "copies": [
-            {
-                "id": "1",
-                "status": "in_library",
-                "reserveList": []
-            },
-            {
-                "id": "2",
-                "status": "in_library",
-                "reserveList": []
-            },
-            {
-                "id":"3",
-                "status": "in_library",
-                "reserveList": []
-            }
-        ]
+    "isbn": "1498599656",
+    "title": "Plato's Socrates on Socrates",
+    "author": "Anne Marie Schultz",
+    "published": "2020-03-18T22:00:00.000Z",
+    "pages": 152,
+    "description": "In Plato's Socrates on Socrates: Socratic Self-Disclosure and the Public Practice of Philosophy, Anne-Marie Schultz analyzes the philosophical and political implications of Plato’s presentation of Socrates’ self-disclosive speech in four dialogues: Theaetetus, Symposium, Apology, and Phaedo. Schultz argues that these moments of Socratic self-disclosure show that Plato’s presentation of “Socrates the narrator” is much more pervasive than the secondary literature typically acknowledges.",
+    "copies": [
+        {
+            "id": "1",
+            "status": "in_library",
+            "reserveList": []
+        },
+        {
+            "id": "2",
+            "status": "in_library",
+            "reserveList": []
+        }
+    ]
 }
