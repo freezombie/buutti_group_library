@@ -11,12 +11,10 @@ export const newUser = async (req, res) => {
     // crypt the password
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);
-    password = hashedPassword;
-    const fundRequest = [];
     const user = {
         name,
         email,
-        password,
+        password: hashedPassword,
         role,
         borrow_history: [],
         borrowed_books: []
