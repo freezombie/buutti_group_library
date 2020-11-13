@@ -1,6 +1,19 @@
 import bcrypt from "bcrypt";
 import userModel from "../models/userModel.js";
 
+let emailChek;
+
+const checkEmail = async (email) => {
+    emailChek = await userModel.findOne(
+        { email },
+    );
+    console.log("result of email check");
+    if (!emailChek) {
+        return (!emailChek);
+    }
+    console.log("Email found, try a different email");
+};
+
 export const newUser = async (req, res) => {
     const {
         name,
@@ -8,20 +21,23 @@ export const newUser = async (req, res) => {
         role,
         password,
     } = req.body;
+    checkEmail(email);
     // crypt the password
-    const salt = await bcrypt.genSalt(10);
-    const hashedPassword = await bcrypt.hash(password, salt);
-    const user = {
-        name,
-        email,
-        password: hashedPassword,
-        role,
-        borrow_history: [],
-        borrowed_books: [],
-    };
-    const userData = new userModel(user);
-    await userData.save();
-    res.json(user);
+    if (!emailChek) {
+        const salt = await bcrypt.genSalt(10);
+        const hashedPassword = await bcrypt.hash(password, salt);
+        const user = {
+            name,
+            email,
+            password: hashedPassword,
+            role,
+            borrow_history: [],
+            borrowed_books: [],
+        };
+        const userData = new userModel(user);
+        await userData.save();
+        res.json(user);
+    }
 };
 
 export const allUsers = async (req, res) => {
@@ -62,8 +78,19 @@ export const editUser = async (req, res) => {
             res.json(user);
         } else {
             console.log("password error");
+            return res.status(500).send("wrong password.");
         }
     } else {
         console.log("wrong user name or password");
+        return res.status(500).send("wrong user name or password.");
     }
+};
+
+export const removeUser = async (req, res) => {
+    const userDelete =
+        await userModel.deleteOne({ email: req.body.email });
+    if (userDelete.deletedCount === 1) {
+        return res.status(200).send(`User: ${req.body.email} deleted succesfully`);
+    }
+    return res.status(500).send("User doesn't exist.");
 };
