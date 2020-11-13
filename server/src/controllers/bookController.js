@@ -1,5 +1,6 @@
 import { json } from "express";
 import bookModel from "../models/bookModel.js";
+import userModel from "../models/userModel.js";
 
 export const newBook = async (req, res) => {
     const {
@@ -95,6 +96,10 @@ export const modifyBook = async (req,res) => {
 };
 
 export const deleteBook = async (req, res) => {
+    const book = await bookModel.findOne({ isbn: req.body.isbn });
+    if (!book) {
+        return res.status(404).send(`No book found by ISBN ${req.body.isbn}`);
+    }
     if(!"copy_id" in req.body)
     {
         const operation =
@@ -105,14 +110,28 @@ export const deleteBook = async (req, res) => {
             return res.status(500).send("Something went wrong!");
         }
     } else {
-        const book = await bookModel.findOne({ isbn: req.body.isbn });
-        if (!book) {
-            return res.status(404).send(`No book found by ISBN ${req.body.isbn}`);
-        } else {
-            book.copies.id(req.body.copy_id).remove();
-            book.save()
-            return res.status(200).send(`Removed copy (if it existed) by _id: ${req.body.copy_id}`);
-        }
-
+        book.copies.id(req.body.copy_id).remove();
+        await book.save()
+        return res.status(200).send(`Removed copy (if it existed) by _id: ${req.body.copy_id}`);
     }
+}
+
+export const reserveBook = async(req, res) => {
+    const book = await bookModel.findOne({ isbn: req.body.isbn });
+    if (!book) {
+        return res.status(404).send(`No book found by ISBN ${req.body.isbn}`);
+    }
+    const user = await userModel.findOne({ _id: req.body.reserverId });
+    if (!user) {
+        return res.status(404).send(`No user found by ID: ${req.body.reserverId}`);
+    }
+    const copy = book.copies.id(req.body.copy_id);
+    if (!copy) {
+        return res.status(404).send(`No copy found by ID: ${req.body.copy_id}`);
+    }
+    const reservation = { reserverId: req.body.reserverId }; 
+    const newReserveList = [...copy.reserveList, reservation];
+    copy.reserveList = newReserveList;
+    await book.save();
+    return res.status(200).send("Reservation made");
 }

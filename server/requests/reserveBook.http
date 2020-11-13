@@ -1,0 +1,8 @@
+POST  http://localhost:5000/book/reserve HTTP/1.1
+Content-Type: application/json
+
+{
+    "reserverId": "5fae7a87e076065619ef8d62",
+    "isbn": "1498599656",
+    "copy_id": "5fae565c659d0d4fe9c98d10" 
+}
