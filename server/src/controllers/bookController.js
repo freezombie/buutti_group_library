@@ -32,4 +32,22 @@ export const searchBook = async (req, res) => {
             }
             return res.json(matches);
     }
+    if ("isbn" in req.body) {
+        getBook(req, res);
+    }
+    if("author" in req.body) {
+        const matches = await bookModel.find({ author: { $regex: req.body.author, $options: "i" } });
+            if(Object.entries(matches).length === 0) {
+                return res.status(404).send("No matches found");
+            }
+            return res.json(matches);
+    }
 }
+
+export const getBook = async (req, res) => {
+    const book = await bookModel.findOne({ isbn: req.body.isbn });
+    if (!book) {
+        return res.status(404).send(`No book found by ISBN ${req.body.isbn}`);
+    }
+    return res.json(book);
+};
