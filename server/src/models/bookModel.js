@@ -5,7 +5,7 @@ const copySchema = new mongoose.Schema({
     status: String,
     due: Date,
     borrower_id: Number,
-    reserveList: { reserverId: Number },
+    reserveList: [{reserverId: String }],
 });
 const bookSchema = new mongoose.Schema({
     isbn: String,
