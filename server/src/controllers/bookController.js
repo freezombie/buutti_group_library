@@ -57,3 +57,13 @@ export const modifyBook = async (req,res) => {
     const returnMsgBook = book.replaceOne(modifiedBook);
     res.status(200).json(returnMsgBook._update);
 };
+
+export const deleteBook = async (req, res) => {
+    const operation =
+        await bookModel.deleteOne({ isbn: req.body.isbn });
+    if(operation.deletedCount === 1) {
+        return res.status(200).send(`Book by ISBN: ${req.body.isbn} deleted succesfully`);
+    } else {
+        return res.status(500).send("Something went wrong!");
+    } 
+} 
