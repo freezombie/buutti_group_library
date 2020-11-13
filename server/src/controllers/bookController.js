@@ -43,3 +43,17 @@ export const getBooks = async (req, res) => {
     const books = await bookModel.find();
     return res.json(books);
 };
+
+export const modifyBook = async (req,res) => {
+    const book = await bookModel.findOne({ isbn: req.body.isbn });
+    if (!book) {
+        return res.status(404).send(`No book found by ISBN ${req.body.isbn}`);
+    }
+    if(!"newInfo" in req.body) {
+        return res.status(500).send("You must present us with some new info");
+    }
+    const newInfo = req.body.newInfo;
+    const modifiedBook = Object.assign(book, newInfo);
+    const returnMsgBook = book.replaceOne(modifiedBook);
+    res.status(200).json(returnMsgBook._update);
+};
