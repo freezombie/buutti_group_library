@@ -1,0 +1,7 @@
+PUT  http://localhost:5000/book/ HTTP/1.1
+Content-Type: application/json
+
+{
+    "isbn": "1498599656",
+    "newInfo": { "pages": 152, "author": "Anne Marie Schultz"}
+}
