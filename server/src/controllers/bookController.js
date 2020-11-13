@@ -2,9 +2,16 @@ import { json } from "express";
 import bookModel from "../models/bookModel.js";
 
 export const newBook = async (req, res) => {
-    const { isbn, title, author, published, pages, description } = req.body;
+    const {
+        isbn,
+        title,
+        author,
+        published,
+        pages,
+        description,
+    } = req.body;
     const Book = bookModel;
-    const book = new Book ({
+    const book = new Book({
         isbn,
         title,
         author,
@@ -42,7 +49,7 @@ export const searchBook = async (req, res) => {
             }
             return res.json(matches);
     }
-}
+};
 
 export const getBook = async (req, res) => {
     const book = await bookModel.findOne({ isbn: req.body.isbn });
@@ -50,4 +57,10 @@ export const getBook = async (req, res) => {
         return res.status(404).send(`No book found by ISBN ${req.body.isbn}`);
     }
     return res.json(book);
+};
+
+// Alla olveassa jostain syystä pakko olla req, muuten ei toimi.
+export const getBooks = async (req, res) => {
+    const books = await bookModel.find();
+    return res.json(books);
 };
