@@ -3,5 +3,6 @@ Content-Type: application/json
 
 {
     "isbn": "1498599656",
-    "newInfo": { "pages": 152, "author": "Anne Marie Schultz"}
+    "newInfo": {},
+    "newCopies": [{ "status": "in_library" },{"status": "in_library"}]
 }
