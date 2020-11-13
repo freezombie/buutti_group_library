@@ -70,8 +70,23 @@ export const modifyBook = async (req,res) => {
     if (!book) {
         return res.status(404).send(`No book found by ISBN ${req.body.isbn}`);
     }
+    if("newCopies" in req.body)
+    {
+        if(req.body.newCopies.length > 0)
+        {
+            req.body.newCopies.forEach((copyInRequest) => {
+                book.copies.push({
+                    status: copyInRequest.status,
+                    due: copyInRequest.due,
+                    borrower_id: copyInRequest.borrower_id,
+                    reserveList: copyInRequest.reserveList,
+                });
+            });
+            await book.save();
+        }
+    }
     if(!"newInfo" in req.body) {
-        return res.status(500).send("You must present us with some new info");
+        return res.status(500).send("You must present us with some new info or a new copy");
     }
     const newInfo = req.body.newInfo;
     const modifiedBook = Object.assign(book, newInfo);
@@ -80,11 +95,24 @@ export const modifyBook = async (req,res) => {
 };
 
 export const deleteBook = async (req, res) => {
-    const operation =
+    if(!"copy_id" in req.body)
+    {
+        const operation =
         await bookModel.deleteOne({ isbn: req.body.isbn });
-    if(operation.deletedCount === 1) {
-        return res.status(200).send(`Book by ISBN: ${req.body.isbn} deleted succesfully`);
+        if(operation.deletedCount === 1) {
+            return res.status(200).send(`Book by ISBN: ${req.body.isbn} deleted succesfully`);
+        } else {
+            return res.status(500).send("Something went wrong!");
+        }
     } else {
-        return res.status(500).send("Something went wrong!");
-    } 
-} 
+        const book = await bookModel.findOne({ isbn: req.body.isbn });
+        if (!book) {
+            return res.status(404).send(`No book found by ISBN ${req.body.isbn}`);
+        } else {
+            book.copies.id(req.body.copy_id).remove();
+            book.save()
+            return res.status(200).send(`Removed copy (if it existed) by _id: ${req.body.copy_id}`);
+        }
+
+    }
+}
