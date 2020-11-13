@@ -10,12 +10,10 @@ Content-Type: application/json
     "description": "In Plato's Socrates on Socrates: Socratic Self-Disclosure and the Public Practice of Philosophy, Anne-Marie Schultz analyzes the philosophical and political implications of Plato’s presentation of Socrates’ self-disclosive speech in four dialogues: Theaetetus, Symposium, Apology, and Phaedo. Schultz argues that these moments of Socratic self-disclosure show that Plato’s presentation of “Socrates the narrator” is much more pervasive than the secondary literature typically acknowledges.",
     "copies": [
         {
-            "id": "1",
             "status": "in_library",
             "reserveList": []
         },
         {
-            "id": "2",
             "status": "in_library",
             "reserveList": []
         }
