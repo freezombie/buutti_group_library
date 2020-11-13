@@ -1,6 +1,7 @@
 import express from "express";
 import mongoose from "mongoose";
-import bookRouter from "./src/routes/bookRouter.js";
+import bookRouter from "./src/routes/bookRouter.js"
+import { getBooks } from "./src/controllers/bookController.js";
 import userRouter from "./src/routes/userRouter.js";
 
 const requestLogger = (req, res, next) => {
@@ -24,12 +25,12 @@ const connectMongoose = async () => {
 connectMongoose();
 app.use(express.json());
 
-app.get("/", (req, res) => {
-    res.send("test, hello");
-});
+const router = express.Router();
+router.get("/", getBooks);
 
 app.use(requestLogger);
 app.use("/book/", bookRouter);
+app.use("/books/", router);
 app.use("/users/", userRouter);
 
 app.listen(5000, () => {
