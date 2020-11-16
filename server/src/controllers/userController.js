@@ -102,7 +102,9 @@ export const borrowBook = async (req, res) => {
     const user = await userModel.findOne({ email: req.body.email });
     // let copy = JSON.stringify(book.copies);
     if (user && book) {
-        const copy = await bookModel.findOne({ status: book.copies.status === "in_library" });
+        //const copy = await bookModel.findOne({ status: book.copies.status === "in_library" });
+        const copy = book.copies.find(copy => copy.status === "in_library");
+        
         const borrowDate = new Date();
         const returnDate = new Date();
         returnDate.setDate(60);
