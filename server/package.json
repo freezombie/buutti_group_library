@@ -5,7 +5,8 @@
     "eslint-plugin-import": "^2.22.1",
     "express": "^4.17.1",
     "mongoose": "^5.10.13",
-    "readline-sync": "^1.4.10"
+    "readline-sync": "^1.4.10",
+    "rebass": "^4.0.7"
   },
   "name": "group-d",
   "description": "Folder for the magnificient library application by group D",
