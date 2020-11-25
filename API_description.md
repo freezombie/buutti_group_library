@@ -161,3 +161,89 @@ Book by ISBN: {isbn} deleted succesfully.
 ```
 Something went wrong.
 ```
+
+`delete /book (copy)`
+
+data fields
+```
+{
+    "isbn":
+    "copy_id":
+}
+```
+
+#### Returns
+200
+```
+Removed copy (if it existed) by _id:
+```
+
+`post /book/reserve`
+
+data fields
+```
+{
+    "reserverId": "",
+    "isbn": "",
+    "copy_id": "" 
+}
+
+```
+
+#### Returns
+404
+```
+No book found by ISBN:
+No user found by ID:
+No copy found by ID:
+```
+
+200
+```
+Reservation made.
+```
+
+`delete /user`
+
+data fields
+```
+{
+    "email": ""
+}
+
+```
+
+#### Returns
+500
+```
+User doesn't exist.
+```
+
+200
+```
+User deleted succesfully
+```
+
+`get /book/search`
+
+data fields
+```
+{
+    "title": ""
+    OR
+    "isbn": ""
+    OR
+    "author": ""
+}
+```
+
+#### Returns
+404
+```
+No matches found.
+```
+
+200
+```
+Search result
+```
