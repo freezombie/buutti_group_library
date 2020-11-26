@@ -9,11 +9,11 @@ const bookAxios = axios.create();
 
 
 const BookList = (props) => {
-  const { string } = props;
+  const { searchString } = props;
   const [bookData,setBookData] = useState([]);
   useEffect(() => {
     if(props){
-      if(!props.string){
+      if(!props.searchString){
           bookAxios({
             method: "get",
             url: `${URL}/books`,
@@ -21,10 +21,10 @@ const BookList = (props) => {
             setBookData(response.data);
           });
       } else {
-        console.log("no search string");
+        console.log("search with string ", props.searchString);
       }
   }
-  }, [string]);
+  }, [searchString]);
 
   return(
     <Tiles columns={[1, null, 1]}
