@@ -115,9 +115,18 @@ export const borrowBook = async (req, res) => {
             dateBorrowed: borrowDate,
             dateReturn: returnDate,
         };
+        
+        copy.status ="borrowed";
+
         await userModel.updateOne(user, borrowed_books, (err, obj) => {
             if (err) throw err;
             console.log("book borrowed");
+            bookModel.updateOne(book, copy.status, (err,obj) => {
+           // bookModel.updateOne(book, copy);    
+                if (err) throw err;
+                console.log("copy statues changed to borrowed");
+            });  
+
         });
         res.status(201).json(borrowed_books);
 
