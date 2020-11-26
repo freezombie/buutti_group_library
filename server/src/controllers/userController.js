@@ -1,5 +1,6 @@
 import bcrypt from "bcrypt";
 import userModel from "../models/userModel.js";
+import bookModel from "../models/bookModel.js";
 
 let emailChek;
 
@@ -88,9 +89,43 @@ export const editUser = async (req, res) => {
 
 export const removeUser = async (req, res) => {
     const userDelete =
-        await userModel.deleteOne({ email: req.body.email });
+       await userModel.deleteOne({ email: req.body.email });
+    // await userModel.deleteMany();
     if (userDelete.deletedCount === 1) {
         return res.status(200).send(`User: ${req.body.email} deleted succesfully`);
     }
     return res.status(500).send("User doesn't exist.");
+};
+
+export const borrowBook = async (req, res) => {
+    const book = await bookModel.findOne({ isbn: req.body.isbn });
+    const user = await userModel.findOne({ email: req.body.email });
+    // let copy = JSON.stringify(book.copies);
+    if (user && book) {
+        //const copy = await bookModel.findOne({ status: book.copies.status === "in_library" });
+        const copy = book.copies.find(copy => copy.status === "in_library");
+        const borrowDate = new Date();
+        const returnDate = new Date();
+        returnDate.setDate(60);
+        console.log("borrow book!!!");
+        const borrowed_books = {
+            isbn: book.isbn,
+            title: book.title,
+            copyID: copy,
+            dateBorrowed: borrowDate,
+            dateReturn: returnDate,
+        };
+        await userModel.updateOne(user, borrowed_books, (err, obj) => {
+            if (err) throw err;
+            console.log("book borrowed");
+        });
+        res.status(201).json(borrowed_books);
+
+        console.log(book);
+        console.log(user);
+        console.log("Borrow date " + borrowDate);
+        console.log("return date " + returnDate);
+    } else {
+        console.log("No user or book found");
+    }
 };
