@@ -104,6 +104,8 @@ export const borrowBook = async (req, res) => {
     if (user && book) {
         //const copy = await bookModel.findOne({ status: book.copies.status === "in_library" });
         const copy = book.copies.find(copy => copy.status === "in_library");
+
+        if (copy){
         const borrowDate = new Date();
         const returnDate = new Date();
         returnDate.setDate(60);
@@ -119,10 +121,11 @@ export const borrowBook = async (req, res) => {
         copy.status ="borrowed";
 
         await userModel.updateOne(user, borrowed_books, (err, obj) => {
+            user.save();
             if (err) throw err;
             console.log("book borrowed");
             bookModel.updateOne(book, copy.status, (err,obj) => {
-           // bookModel.updateOne(book, copy);    
+                book.save();
                 if (err) throw err;
                 console.log("copy statues changed to borrowed");
             });  
@@ -134,6 +137,15 @@ export const borrowBook = async (req, res) => {
         console.log(user);
         console.log("Borrow date " + borrowDate);
         console.log("return date " + returnDate);
+        
+    } else  {
+        console.log("all books gone");
+        res.status(404).json("No books available at the moment");
+        }
+
+
+
+       
     } else {
         console.log("No user or book found");
     }
@@ -141,11 +153,13 @@ export const borrowBook = async (req, res) => {
 
 export const returnBook = async (req, res) => { 
 const user = await userModel.findOne({ email: req.body.email });
-const bookISBN = req.body.isbn;
 if (user) {
-const book = user.borrowed_books.findOneAndRemove(book => book.isbn === bookISBN);
-res.status(201).json("Borrowed book returned");
+const book = await user.borrowed_books.findOneAndRemove(book => book.isbn === req.body.isbn);
 
+if (book) {
+res.status(201).json("Borrowed book returned");
+}
+res.status(200).json("No such book FOUND!!!");
 }
 
 
