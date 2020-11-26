@@ -1,12 +1,14 @@
 import { Flex, Box, Image, Text } from "rebass";
 import { Tiles } from "@rebass/layout";
 import { Label, Input, Radio } from "@rebass/forms";
-import React from "react";
+import React, {useState} from "react";
+import BookList from "./components/booklist.jsx";
 // import { BrowserRouter as Link } from "react-router-dom";
-import img from "./JoyceUlysses2.jpg";
 import "./App.css";
 
 function App() {
+    const [searchString, setSearchString] = useState("");
+    const [searchOption, setSearchOption] = useState("");
   return (
     <div className="App">
       <header>
@@ -72,13 +74,8 @@ function App() {
               />
             </Flex>
           </Tiles>
-        
-          <Tiles width={[96, null, 128]}
-                bg="white">
-            <Image src={img} />
-            <p>test</p>
-          </Tiles>
-        </Box>
+            <BookList />
+          </Box>
       </div>
 
       <footer>
