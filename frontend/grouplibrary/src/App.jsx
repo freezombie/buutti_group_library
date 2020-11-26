@@ -10,7 +10,7 @@ function App() {
     const [searchString, setSearchString] = useState("");
     const [searchOption, setSearchOption] = useState("");
   return (
-    <div className="Appi">
+    <div className="App">
       <header>
         <Flex>
           <Box
