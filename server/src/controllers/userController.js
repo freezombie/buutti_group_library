@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 import userModel from "../models/userModel.js";
 import bookModel from "../models/bookModel.js";
+import { json } from "express";
 
 let emailChek;
 
@@ -113,14 +114,26 @@ export const borrowBook = async (req, res) => {
         const borrowed_books = {
             isbn: book.isbn,
             title: book.title,
-            copyID: copy,
+            copyID: copy._id,
             dateBorrowed: borrowDate,
             dateReturn: returnDate,
         };
         
-        copy.status ="borrowed";
+        const borrow_history = {
+            title: book.title,
+            dateBorrowed: borrowDate,
+        };
 
-        await userModel.updateOne(user, borrowed_books, (err, obj) => {
+        const books = {
+            borrowed_books,
+            borrow_history,
+        };
+
+        copy.status ="borrowed";
+        JSON.stringify(borrowed_books);
+        console.log("this is" + borrowed_books);
+
+        await userModel.updateOne(user, books, (err, obj) => {
             user.save();
             if (err) throw err;
             console.log("book borrowed");
@@ -137,7 +150,7 @@ export const borrowBook = async (req, res) => {
         console.log(user);
         console.log("Borrow date " + borrowDate);
         console.log("return date " + returnDate);
-        
+
     } else  {
         console.log("all books gone");
         res.status(404).json("No books available at the moment");
