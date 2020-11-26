@@ -138,3 +138,15 @@ export const borrowBook = async (req, res) => {
         console.log("No user or book found");
     }
 };
+
+export const returnBook = async (req, res) => { 
+const user = await userModel.findOne({ email: req.body.email });
+const bookISBN = req.body.isbn;
+if (user) {
+const book = user.borrowed_books.findOneAndRemove(book => book.isbn === bookISBN);
+res.status(201).json("Borrowed book returned");
+
+}
+
+
+}
