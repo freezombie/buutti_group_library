@@ -104,19 +104,22 @@ export const borrowBook = async (req, res) => {
     if (user && book) {
         //const copy = await bookModel.findOne({ status: book.copies.status === "in_library" });
         const copy = book.copies.find(copy => copy.status === "in_library");
-        
         const borrowDate = new Date();
         const returnDate = new Date();
         returnDate.setDate(60);
         console.log("borrow book!!!");
-        user.borrowed_books = {
+        const borrowed_books = {
             isbn: book.isbn,
             title: book.title,
             copyID: copy,
             dateBorrowed: borrowDate,
             dateReturn: returnDate,
         };
-        await userModel.updateOne(user);
+        await userModel.updateOne(user, borrowed_books, (err, obj) => {
+            if (err) throw err;
+            console.log("book borrowed");
+        });
+        res.status(201).json(borrowed_books);
 
         console.log(book);
         console.log(user);
