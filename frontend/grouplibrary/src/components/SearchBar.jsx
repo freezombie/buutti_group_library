@@ -14,22 +14,22 @@ const SearchBar = (props) => {
     return(
         <Tiles columns={[1, null, 2]}>
             <Flex onChange={handleChange}>
-                <Label>
-                    <Radio
+                <Label py={2}>
+                    <Radio color='black'
                     name='option'
                     id='author'
                     value='author'
                     />Author
                 </Label>
-                <Label>
-                    <Radio
+                <Label py={2}>
+                    <Radio color='black'
                     name='option'
                     id='title'
                     value='title'
                     />Title
                 </Label>
-                <Label>
-                    <Radio
+                <Label py={2}>
+                    <Radio color='black'
                     name='option'
                     id='isbn'
                     value='isbn'
@@ -41,7 +41,8 @@ const SearchBar = (props) => {
                     id='Search'
                     name='search'
                     type='search'
-                    placeholder='Search for titles, authors, isbns'
+                    placeholder='Search by author, title, isbn'
+                    bg='white'
                     onChange={handleChange}
                 />
             </Flex>

@@ -1,6 +1,7 @@
 import React, {useState, useEffect } from 'react';
 import axios from "axios";
-import img from "../JoyceUlysses2.jpg";
+import img from "../placeholder-img.png";
+import { Box, Image, Text } from "rebass";
 import { Tiles } from "@rebass/layout";
 import Book from "./Book";
 
@@ -65,15 +66,31 @@ const BookList = (props) => {
     }, [searchString, searchOption]);
 
     return(
-    <Tiles columns={[1, null, 1]}
-    bg="white">
-    {   bookData.map((book) =>{
-        book.img = img;
-        return(<Book data={book} />);
-        })
-    }
-    </Tiles>
+        <div>
+            <Tiles columns={[1, null, 1]}
+                bg="white">
+                {   bookData.map((book) =>{
+                    book.img = img;
+                    return(<Book data={book} />);
+                    })
+                }
+            </Tiles>
 
+            <Tiles columns={[2, null, 4]} py={2}>
+                <Image src={img} height={140} width={95}/>
+                <Text paddingRight={280}>bookData</Text>
+            </Tiles>
+
+            <Tiles columns={[2, null, 4]} py={2}>
+                <Image src={img} height={140} width={95}/>
+                <Text paddingRight={280}>bookData</Text>
+            </Tiles>
+
+            <Tiles columns={[2, null, 4]} py={2}>
+                <Image src={img} height={140} width={95}/>
+                <Text paddingRight={280}>bookData</Text>
+            </Tiles>
+        </div>
     )
 }
 
