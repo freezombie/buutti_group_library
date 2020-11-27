@@ -1,7 +1,8 @@
-import { Flex } from "rebass";
+import { Flex, Image } from "rebass";
 import { Tiles } from "@rebass/layout";
 import { Button } from "rebass";
-import "./book.css"
+import img from "../placeholder-img.png";
+import "./book.css";
 
 function Book (props) {
     const { isbn, title, author, img, published, description} = props.data;
@@ -13,7 +14,7 @@ function Book (props) {
     return(
     <div className="book">
         <Tiles columns={1, null , 2}>
-            <img src={img} />
+            <Image src={img} />
             <div>
                 <h1>{title}</h1>
                 <h2>{author}</h2>
@@ -25,7 +26,7 @@ function Book (props) {
         <Flex className="reserveArea">
             <p><b>Total copies: </b> {props.data.copies.length}</p>
             <p><b>Copies available:</b> {availableCopies.length}</p>
-            <Button>{availableCopies != 0 ? "Loan" : "Reserve"}</Button>
+            <Button>{availableCopies !== 0 ? "Loan" : "Reserve"}</Button>
         </Flex>
     </div>
     );
