@@ -14,20 +14,24 @@ function App() {
       <header>
         <Flex>
           <Box
-            p={3}
+            px={7}
+            py={3}
             width={1}
             height={100}
             color='black'
             bg='red'>
               
             <Flex
-              px={2}
+              width={1}
+              px={3}
               color='white'
               bg='black'
               alignItems='center'>
-              <Text p={2} fontWeight='bold'>Rebass</Text>
-              <Box mx='auto' />
-              <p>Profile</p>
+              <Text p={1} fontWeight='bold'>Group D Library</Text>
+              <Box width={1} />
+              <Text p={1} fontWeight='bold'>Signup</Text>
+              <Box width={11} />
+              <Text p={3} fontWeight='bold'>Profile</Text>
             </Flex>
           </Box>
         </Flex>
@@ -35,30 +39,32 @@ function App() {
 
       <div className="body">
         <Box
-          p={3}
-          fontSize={4}
+          px={7}
+          py={2}
+          fontSize={2}
           width={[ 1, 1 ]}
           color='black'
           bg='blue'>
 
-          <Tiles columns={[1, null, 2]}>
+          <Tiles columns={[1, null, 2]} px={3}>
             <Flex>
-              <Label>
-                <Radio
+              <Label p={2}>
+                <Radio color='black'
+                  name='option'
+                  id='title'
+                  value='title'
+                  defaultChecked
+                />Title
+              </Label>
+              <Label p={2}>
+                <Radio color='black'
                   name='option'
                   id='author'
                   value='author'
                 />Author
               </Label>
-              <Label>
-                <Radio
-                  name='option'
-                  id='title'
-                  value='title'
-                />Title
-              </Label>
-              <Label>
-                <Radio
+              <Label p={2}>
+                <Radio color='black'
                   name='option'
                   id='isbn'
                   value='isbn'
@@ -71,6 +77,7 @@ function App() {
               name='search'
               type='search'
               placeholder='Search for titles, authors, isbns'
+              bg='white'
               />
             </Flex>
           </Tiles>
