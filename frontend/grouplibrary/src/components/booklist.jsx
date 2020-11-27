@@ -9,34 +9,72 @@ const bookAxios = axios.create();
 
 
 const BookList = (props) => {
-  const { string } = props;
-  const [bookData,setBookData] = useState([]);
-  useEffect(() => {
-    if(props){
-      if(!props.string){
-          bookAxios({
-            method: "get",
-            url: `${URL}/books`,
-          }).then(response => {
-            setBookData(response.data);
-          });
-      } else {
-        console.log("no search string");
-      }
-  }
-  }, [string]);
+    const { searchString, searchOption } = props;
+    const [bookData,setBookData] = useState([]);
+    
+    useEffect(() => {
+        if(props){
+            if(!props.searchString){
+            bookAxios({
+                method: "get",
+                url: `${URL}/books`,
+            }).then(response => {
+                setBookData(response.data);
+            });
+            } else {
+                // ettei haeta ihan hirveen pienillä hauilla.
+                if(props.searchString.length < 3) {
+                    return;
+                }
+                // alla olevat varmaan voi jotenkin yhdistää silleen että dataan syötetään title,author,isbn kohdalle searchoption.
+                if(props.searchOption === "author") {
+                    bookAxios({
+                        method: "post",
+                        url: `${URL}/book/search`,
+                        data: { author: props.searchString }
+                    }).then(response => {
+                        console.log("author search");
+                        console.log(response.data);
+                        setBookData(response.data);
+                    });
+                } else if (props.searchOption === "title") {
+                    bookAxios({
+                        method: "post",
+                        url: `${URL}/book/search`,
+                        data: { title: props.searchString }
+                    }).then(response => {
+                        console.log("title search");
+                        console.log(response.data);
+                        setBookData(response.data);
+                    });
+                } else if (props.searchOption === "isbn") {
+                    bookAxios({
+                        method: "post",
+                        url: `${URL}/book/search`,
+                        data: { isbn: props.searchString }
+                    }).then(response => {
+                        console.log("author search");
+                        console.log(response.data);
+                        setBookData([response.data]);
+                    });
+                }
+                console.log("search with string ", props.searchString);
+                console.log("search with option ", props.searchOption);
+            }
+        }
+    }, [searchString, searchOption]);
 
-  return(
+    return(
     <Tiles columns={[1, null, 1]}
-              bg="white">
-                {bookData.map((book) =>{
-                  book.img = img;
-                  return(<Book data={book} />);
-                })
-              }
+    bg="white">
+    {   bookData.map((book) =>{
+        book.img = img;
+        return(<Book data={book} />);
+        })
+    }
     </Tiles>
-  
-  )
+
+    )
 }
 
 export default BookList

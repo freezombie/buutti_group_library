@@ -12,7 +12,7 @@ import {
 const router = express.Router();
 
 router.get("/", getBook);
-router.get("/search", searchBook);
+router.post("/search", searchBook);
 router.post("/reserve", reserveBook);
 router.post("/", newBook);
 router.put("/", modifyBook);

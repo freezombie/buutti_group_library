@@ -1,8 +1,7 @@
 import { Flex, Box, Image, Text } from "rebass";
-import { Tiles } from "@rebass/layout";
-import { Label, Input, Radio } from "@rebass/forms";
 import React, {useState} from "react";
 import BookList from "./components/booklist.jsx";
+import SearchBar from "./components/SearchBar.jsx";
 // import { BrowserRouter as Link } from "react-router-dom";
 import "./App.css";
 
@@ -41,40 +40,8 @@ function App() {
           color='black'
           bg='blue'>
 
-          <Tiles columns={[1, null, 2]}>
-            <Flex>
-              <Label>
-                <Radio
-                  name='option'
-                  id='author'
-                  value='author'
-                />Author
-              </Label>
-              <Label>
-                <Radio
-                  name='option'
-                  id='title'
-                  value='title'
-                />Title
-              </Label>
-              <Label>
-                <Radio
-                  name='option'
-                  id='isbn'
-                  value='isbn'
-                />ISBN
-              </Label>
-            </Flex>
-            <Flex>
-              <Input
-              id='Search'
-              name='search'
-              type='search'
-              placeholder='Search for titles, authors, isbns'
-              />
-            </Flex>
-          </Tiles>
-            <BookList />
+          <SearchBar modifySearchString={setSearchString} modifySearchOption={setSearchOption}/>
+          <BookList searchString={searchString} searchOption={searchOption} />
           </Box>
       </div>
 
