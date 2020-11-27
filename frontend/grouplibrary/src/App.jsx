@@ -41,7 +41,7 @@ function App() {
           bg='blue'>
 
           <SearchBar modifySearchString={setSearchString} modifySearchOption={setSearchOption}/>
-          <BookList searchString={searchString} searchOption="title" />
+          <BookList searchString={searchString} searchOption={searchOption} />
           </Box>
       </div>
 

@@ -4,12 +4,16 @@ import { Label, Input, Radio } from "@rebass/forms";
 
 const SearchBar = (props) => {
     function handleChange(e) {
-        props.modifySearchString(e.target.value);
+        if(e.target.name === "search") {
+            props.modifySearchString(e.target.value);
+        } else if (e.target.name === "option") {
+            props.modifySearchOption(e.target.value);
+        }
     }
 
     return(
         <Tiles columns={[1, null, 2]}>
-            <Flex>
+            <Flex onChange={handleChange}>
                 <Label>
                     <Radio
                     name='option'
