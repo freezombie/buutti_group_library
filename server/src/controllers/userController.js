@@ -1,7 +1,7 @@
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
 import userModel from "../models/userModel.js";
 import bookModel from "../models/bookModel.js";
-import { json } from "express";
 
 let emailChek;
 
@@ -14,6 +14,23 @@ const checkEmail = async (email) => {
         return (!emailChek);
     }
     console.log("Email found, try a different email");
+};
+
+export const loginUser = async (req, res) => {
+    const user = await userModel.findOne({ email: req.body.email }, (err, res) => {
+        if (err) {
+            return res.status(500).send("Failed while finding user");
+        }
+        if (!res) {
+            return res.status(403).send("User ID incorrect");
+        }
+    });
+
+    if (!(await bcrypt.compare(req.body.password, user.password))) {
+        return res.status(403).send("Password incorrect");
+    }
+    const token = jwt.sign(user.toObject(), process.env.SECRET);
+    return res.send({ token, user: user.toObject(), success: true });
 };
 
 export const newUser = async (req, res) => {
