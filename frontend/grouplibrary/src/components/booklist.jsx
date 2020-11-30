@@ -75,24 +75,26 @@ const BookList = (props) => {
                     })
                 }
             </Tiles>
-
-            <Tiles columns={[2, null, 4]} py={2}>
-                <Image src={img} height={140} width={95}/>
-                <Text paddingRight={280}>bookData</Text>
-            </Tiles>
-
-            <Tiles columns={[2, null, 4]} py={2}>
-                <Image src={img} height={140} width={95}/>
-                <Text paddingRight={280}>bookData</Text>
-            </Tiles>
-
-            <Tiles columns={[2, null, 4]} py={2}>
-                <Image src={img} height={140} width={95}/>
-                <Text paddingRight={280}>bookData</Text>
-            </Tiles>
         </div>
     )
 }
+
+// Mikko's stuff commented out (these were after booklist):
+/* <Tiles columns={[2, null, 4]} py={2}>
+                <Image src={img} height={140} width={95}/>
+                <Text paddingRight={280}>bookData</Text>
+            </Tiles>
+
+            <Tiles columns={[2, null, 4]} py={2}>
+                <Image src={img} height={140} width={95}/>
+                <Text paddingRight={280}>bookData</Text>
+            </Tiles>
+
+            <Tiles columns={[2, null, 4]} py={2}>
+                <Image src={img} height={140} width={95}/>
+                <Text paddingRight={280}>bookData</Text>
+            </Tiles>
+*/
 
 export default BookList
 
