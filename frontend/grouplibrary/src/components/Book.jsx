@@ -9,7 +9,7 @@ function Book (props) {
     const month = published.slice(6,7);
     const day = published.slice(9,10);
     const availableCopies = props.data.copies.filter(copy => copy.status==="in_library");
-
+    console.log(`${title} has ${availableCopies.length} available copies`);
     return(
     <div className="book">
         <Tiles columns={1, null , 2}>
@@ -25,7 +25,7 @@ function Book (props) {
         <Flex className="reserveArea">
             <p><b>Total copies: </b> {props.data.copies.length}</p>
             <p><b>Copies available:</b> {availableCopies.length}</p>
-            <Button>{availableCopies != 0 ? "Loan" : "Reserve"}</Button>
+            <Button>{availableCopies.length !== 0 ? "Loan" : "Reserve"}</Button>
         </Flex>
     </div>
     );

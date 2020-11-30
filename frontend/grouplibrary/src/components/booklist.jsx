@@ -65,17 +65,35 @@ const BookList = (props) => {
     }, [searchString, searchOption]);
 
     return(
-    <Tiles columns={[1, null, 1]}
-    bg="white">
-    {   bookData.map((book) =>{
-        book.img = img;
-        return(<Book data={book} />);
-        })
-    }
-    </Tiles>
-
+        <div>
+            <Tiles columns={[1, null, 1]}
+                bg="white">
+                {   bookData.map((book) =>{
+                    book.img = img;
+                    return(<Book data={book} />);
+                    })
+                }
+            </Tiles>
+        </div>
     )
 }
+
+// Mikko's stuff commented out (these were after booklist):
+/* <Tiles columns={[2, null, 4]} py={2}>
+                <Image src={img} height={140} width={95}/>
+                <Text paddingRight={280}>bookData</Text>
+            </Tiles>
+
+            <Tiles columns={[2, null, 4]} py={2}>
+                <Image src={img} height={140} width={95}/>
+                <Text paddingRight={280}>bookData</Text>
+            </Tiles>
+
+            <Tiles columns={[2, null, 4]} py={2}>
+                <Image src={img} height={140} width={95}/>
+                <Text paddingRight={280}>bookData</Text>
+            </Tiles>
+*/
 
 export default BookList
 
