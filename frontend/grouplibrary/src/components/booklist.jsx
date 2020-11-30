@@ -1,6 +1,7 @@
 import React, {useState, useEffect } from 'react';
 import axios from "axios";
-import img from "../JoyceUlysses2.jpg";
+import img from "../placeholder-img.png";
+import { Box, Image, Text } from "rebass";
 import { Tiles } from "@rebass/layout";
 import Book from "./Book";
 
