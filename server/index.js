@@ -37,7 +37,7 @@ app.use(requestLogger);
 app.use("/book/", bookRouter);
 app.use("/books/", router);
 app.use("/users/", userRouter);
-app.use("/auth", authRouter);
+app.use("/users", authRouter);
 app.use("/api", expressJwt({secret: process.env.SECRET, algorithms: ["HS256"]}));
 
 app.listen(5000, () => {
