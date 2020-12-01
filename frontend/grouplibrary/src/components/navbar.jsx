@@ -25,10 +25,14 @@ const NavBar = (props) => {
                 <Link to="" onClick = { goToFrontPage }>
                     <Text p={1} fontWeight='bold'>Group D Library</Text>
                 </Link>
+                
                 <Box width={1} />
-                {props.token && <Link to="/login">
+                {!props.token && <Link to="/login">
                     <Text p={1} fontWeight='bold'>Signup/Login</Text>
-                </Link>}                
+                </Link>}
+                {props.token && <Link to="/" onClick = { props.logout }>
+                    <Text p={1} fontWeight='bold'>Logout</Text>
+                </Link>}               
                 <Box width={11} />
                 {props.token && <Link to="/profile">
                     <Text p={3} fontWeight='bold'>Profile</Text>

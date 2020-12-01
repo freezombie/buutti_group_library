@@ -23,19 +23,21 @@ export class AppContextProvider extends Component {
     }
 
     signup = (userInfo) => {
+        console.log(userInfo);
         return userAxios({
             method: "post",
-            url: `${URL}/users/users/new`, // tälleen tuo oli backendissä... Pitäs varmaan olla /users/new.
-            headers: { "Content-Type": "application/json"},
+            url: `${URL}/users/users/add`, // tälleen tuo oli backendissä... Pitäs varmaan olla /users/add.
+            headers: { "Content-Type": "application/json" },
             data: {
                 name: userInfo.name,
                 password: userInfo.password,
                 email: userInfo.email,
-                role: "customer"
+                role: "customer",
             }
             // roleen userInfo.role sitten kun on ylipäätään olemassa admin joka vois lisäillä admineita.
         })
             .then(response => {
+                console.log(response.data);
                 const { user, token } = response.data
                 localStorage.setItem("token", token);
                 localStorage.setItem("user", JSON.stringify(user));
@@ -50,16 +52,18 @@ export class AppContextProvider extends Component {
     }
 
     login = (userInfo) => {
+        console.log(userInfo);
         return userAxios({
             method: "post",
-            //url: `${URL}/ user login path,
+            url: `${URL}/users/login`,
             headers: { "Content-Type": "application/json"},
             data: {
-                email: userInfo.id,
+                email: userInfo.email,
                 password: userInfo.password
             }
         })
             .then(response => {
+                console.log(response.data);
                 const { user, token } = response.data
                 // borrowed_books, borrow_history = response.data
                 localStorage.setItem("token", token)
