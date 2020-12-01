@@ -55,7 +55,12 @@ export const newUser = async (req, res) => {
         };
         const userData = new userModel(user);
         await userData.save();
-        res.json(user);
+        const token = jwt.sign(user, process.env.SECRET);
+        user.password = req.body.password; 
+        return res.status(201).send({
+            success: true, user, token,
+        });
+
     }
 };
 
