@@ -32,7 +32,7 @@ export class AppContextProvider extends Component {
                 name: userInfo.name,
                 password: userInfo.password,
                 email: userInfo.email,
-                role: "customer",
+                role: "customer"
             }
             // roleen userInfo.role sitten kun on ylipäätään olemassa admin joka vois lisäillä admineita.
         })
