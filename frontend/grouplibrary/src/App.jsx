@@ -1,75 +1,64 @@
-import { Flex, Box, Text } from "rebass";
-import React, {useState} from "react";
+import { Box } from "rebass";
+import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import BookList from "./components/booklist.jsx";
 import SearchBar from "./components/SearchBar.jsx";
 // import { BrowserRouter as Link } from "react-router-dom";
 import "./App.css";
+import NavBar from "./components/navbar.jsx";
+import Profile from "./components/profile.jsx";
+import Login from "./components/login.jsx";
 
 function App() {
     const [searchString, setSearchString] = useState("");
     const [searchOption, setSearchOption] = useState("");
   return (
     <div className="Page">
-      <div className="App">
-        <header>
-          <Flex>
-            <Box
-              px={7}
-              py={3}
-              width={1}
-              height={100}
-              color='black'>
-                
-              <Flex
-                width={1}
-                px={3}
-                color='gold'
-                bg='black'
-                alignItems='center'>
-                <Text p={1} fontWeight='bold'>Group D Library</Text>
-                <Box width={1} />
-                <Text p={1} fontWeight='bold'>Signup</Text>
-                <Box width={11} />
-                <Text p={3} fontWeight='bold'>Profile</Text>
-              </Flex>
-            </Box>
-          </Flex>
-        </header>
-
-        <div className="searchbar">
-          <Box
-            px={7}
-            py={2}
-            fontSize={2}
-            color='black'>
-
-            <SearchBar modifySearchString={setSearchString} modifySearchOption={setSearchOption}/>
-            
-            </Box>
-        </div>
-
-        <div className="content">
-          <Box 
-            px={7}
-            py={3}
-            color='black'>
-
-            <BookList searchString={searchString} searchOption={searchOption} />
-
-          </Box>
-        </div>
-
+        <Router>
+            <header>
+                <NavBar />
+            </header>
+            <div className="App">
+                <Switch>
+                    <Route exact path="/" render={() => (
+                        <div>
+                            <div className="searchbar">
+                                <Box
+                                px={7}
+                                py={2}
+                                fontSize={2}
+                                color='black'>
+                                    <SearchBar modifySearchString={setSearchString} modifySearchOption={setSearchOption}/>
+                                </Box>
+                            </div>      
+                            <div className="content">
+                                <Box 
+                                px={7}
+                                py={3}
+                                color='black'>      
+                                <BookList searchString={searchString} searchOption={searchOption} />
+                                </Box>
+                            </div>
+                        </div>
+                    )} />
+                    <Route exact path="/profile" render={() => (
+                        <Profile />
+                    )} />
+                    <Route exact path="/login" render={() => (
+                        <Login />
+                    )} />
+                </Switch>
+            </div>
+        </Router>
         <footer>
-          <Box
+            <Box
             p={5}
             fontSize={4}
             width={[ 1, 1 ]}
             color='black'>
-            
-          </Box>
+            </Box>
         </footer>
       </div>
-    </div>
   );
 }
 
