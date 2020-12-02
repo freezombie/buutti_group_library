@@ -6,6 +6,9 @@ import authRouter from "./src/routes/authRouter.js";
 import bookRouter from "./src/routes/bookRouter.js"
 import { getBooks } from "./src/controllers/bookController.js";
 import userRouter from "./src/routes/userRouter.js";
+import cors from "cors";
+
+dotenv.config();
 
 dotenv.config();
 
@@ -34,6 +37,7 @@ const router = express.Router();
 router.get("/", getBooks);
 
 app.use(requestLogger);
+app.use(cors());
 app.use("/book/", bookRouter);
 app.use("/books/", router);
 app.use("/users/", userRouter);
