@@ -9,11 +9,13 @@ const Admin = (props) => {
     const adminAxios = axios.create();
     const URL = "http://localhost:5000";
     const history = useHistory();
-    
-    if(!props.token){
+
+    if(props.token) {
         if(props.user.role!=="admin") {
             history.push("/");
         }
+    } else if (!props.token) {
+        history.push("/");
     }
 
     useEffect(() => {
