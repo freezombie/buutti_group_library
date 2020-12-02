@@ -187,14 +187,20 @@ if (user) {
         let copy = book.copies;
         copy.find((copy) => copy._id === borrowedBook.copyID);
         copy.status = "in_libary";
-        bookModel.updateOne(book, copy.status, (err,obj) => {
+            bookModel.findOneAndUpdate(borrowedBook.copyID, book.copies, {status: copy.status}, (err,obj) => {
             book.save();
             if (err) throw err;
             console.log("copy statues changed to in_library");
         }); 
 
         user.borrowed_books.remove(borrowedBook.copyID);
-        user.save();
+        await user.save();
+     
+        if (user.removeCount === 1) {
+            console.log("book returned");
+        }else {
+            console.log("A mistake has happened in returning the book. try again");
+        }
 
         } else {
             res.status(200).json("No such book FOUND!!!");
