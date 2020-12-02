@@ -179,17 +179,23 @@ const isbn = book.isbn;
 
 if (user) {
 
-    //console.log(book);
     let borrowedBook = user.borrowed_books;
     borrowedBook.find((borrowedBook) => borrowedBook.isbn === isbn);
+    //console.log(borrowedBook);
 
-    if (borrowedBook) {
- 
-        borrowedBook.remove((borrowedBook)=> borrowedBook.isbn === isbn);
-        user.save(borrowedBook);
+    if (borrowedBook) { 
+        let copy = book.copies;
+        copy.find((copy) => copy._id === borrowedBook.copyID);
+        copy.status = "in_libary";
+        bookModel.updateOne(book, copy.status, (err,obj) => {
+            book.save();
+            if (err) throw err;
+            console.log("copy statues changed to in_library");
+        }); 
 
-        console.log(borrowedBook);
-      
+        user.borrowed_books.remove(borrowedBook.copyID);
+        user.save();
+
         } else {
             res.status(200).json("No such book FOUND!!!");
     }
