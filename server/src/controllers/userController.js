@@ -181,7 +181,7 @@ if (user) {
 
     let borrowedBook = await user.borrowed_books.find((borrowedBook) => borrowedBook.isbn === isbn);
     const id = borrowedBook.copyID;
-    
+
     if (borrowedBook) { 
             await bookModel.findOneAndUpdate(id, book.copies, {status: "in_library"}, (err,obj) => {  
             console.log(book.copies);
@@ -190,7 +190,7 @@ if (user) {
             console.log("copy statues changed to in_library");
         }); 
      
-        user.borrowed_books.remove(borrowedBook.copyID;
+        user.borrowed_books.remove(borrowedBook.copyID);
         await user.save();
      
         if (user.removeCount === 1) {
