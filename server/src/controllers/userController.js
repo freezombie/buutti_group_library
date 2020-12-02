@@ -179,21 +179,18 @@ const isbn = book.isbn;
 
 if (user) {
 
-    let borrowedBook = user.borrowed_books;
-    borrowedBook.find((borrowedBook) => borrowedBook.isbn === isbn);
-    //console.log(borrowedBook);
-
+    let borrowedBook = await user.borrowed_books.find((borrowedBook) => borrowedBook.isbn === isbn);
+    const id = borrowedBook.copyID;
+    
     if (borrowedBook) { 
-        let copy = book.copies;
-        copy.find((copy) => copy._id === borrowedBook.copyID);
-        copy.status = "in_libary";
-            bookModel.findOneAndUpdate(borrowedBook.copyID, book.copies, {status: copy.status}, (err,obj) => {
+            await bookModel.findOneAndUpdate(id, book.copies, {status: "in_library"}, (err,obj) => {  
+            console.log(book.copies);
             book.save();
             if (err) throw err;
             console.log("copy statues changed to in_library");
         }); 
-
-        user.borrowed_books.remove(borrowedBook.copyID);
+     
+        user.borrowed_books.remove(borrowedBook.copyID;
         await user.save();
      
         if (user.removeCount === 1) {
