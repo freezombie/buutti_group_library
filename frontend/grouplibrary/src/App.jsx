@@ -8,6 +8,7 @@ import "./App.css";
 import NavBar from "./components/navbar.jsx";
 import Profile from "./components/profile.jsx";
 import Login from "./components/login.jsx";
+import Admin from "./components/admin/admin.jsx"
 
 function App() {
     const [searchString, setSearchString] = useState("");
@@ -46,6 +47,9 @@ function App() {
                     )} />
                     <Route exact path="/login" render={() => (
                         <Login />
+                    )} />
+                    <Route exact path="/admin" render={() => (
+                        <Admin />
                     )} />
                 </Switch>
             </div>

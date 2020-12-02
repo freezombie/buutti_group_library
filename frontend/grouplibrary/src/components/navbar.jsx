@@ -1,6 +1,7 @@
 import { Flex, Box, Text } from "rebass";
 import { withContext } from "./AppContext";
 import React, { Link } from "react-router-dom";
+import userEvent from "@testing-library/user-event";
 
 const NavBar = (props) => {
     const goToFrontPage = () => {
@@ -27,6 +28,9 @@ const NavBar = (props) => {
                 </Link>
                 
                 <Box width={1} />
+                {props.token && props.user.role === "admin" && <Link to="/admin">
+                    <Text p={1} fontWeight='bold'>Admin</Text>
+                </Link>}
                 {!props.token && <Link to="/login">
                     <Text p={1} fontWeight='bold'>Signup/Login</Text>
                 </Link>}
