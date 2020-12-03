@@ -60,6 +60,18 @@ const Admin = (props) => {
         });
     }
 
+    const deleteBook = (e) => {
+        adminAxios({
+            method: "delete",
+            url: `${URL}/book`,
+            data: {
+                isbn: selectedBook.isbn
+            }
+        }).then(response => {
+            console.log(response);
+        })
+    }
+
     const handleChange = (e) => {
         if(e.target.name === "bookchoice") {
             setSelectedBook(bookData.find( ({ isbn }) => isbn === e.target.value));
@@ -81,12 +93,12 @@ const Admin = (props) => {
                 <Box
                     as="form"
                     name="bookform">
-                        <select name="bookchoice" onChange={handleChange}>
+                        <select name="bookchoice" onChange={handleChange} >
                             {bookData.map((book) =>
                                 <option value={book.isbn}>{book.title}</option>
                             )}
-                        </select>
-                        <Button className="delete" my={2}>Delete Book</Button>
+                        </select><br />
+                        <Button className="delete" my={2} onClick={deleteBook}>Delete Book</Button>
                         <Button className="add" mx={2} onClick={addCopy}>Add a copy</Button>
                 </Box>
                 <div id="selectedBook">
