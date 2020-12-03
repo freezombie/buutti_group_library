@@ -100,8 +100,9 @@ export const deleteBook = async (req, res) => {
     if (!book) {
         return res.status(404).send(`No book found by ISBN ${req.body.isbn}`);
     }
-    if(!"copy_id" in req.body)
+    if(!("copy_id" in req.body))
     {
+        console.log("Trying to delete with ISBN: ", req.body.isbn);
         const operation =
         await bookModel.deleteOne({ isbn: req.body.isbn });
         if(operation.deletedCount === 1) {
@@ -109,10 +110,13 @@ export const deleteBook = async (req, res) => {
         } else {
             return res.status(500).send("Something went wrong!");
         }
-    } else {
+    } else if ("copy_id" in req.body) {
+        console.log(req.body.copy_id);
         book.copies.id(req.body.copy_id).remove();
         await book.save()
         return res.status(200).send(`Removed copy (if it existed) by _id: ${req.body.copy_id}`);
+    } else {
+        return res.status(500).send("something went wrong");
     }
 }
 
