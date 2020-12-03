@@ -43,8 +43,21 @@ const Admin = (props) => {
         });
     },[]);
 
-    const onFinish = (e) => {
-        
+    const addCopy = (e) => {
+        e.preventDefault();
+        adminAxios({
+            method: "put",
+            url: `${URL}/book`,
+            data: {
+                isbn: selectedBook.isbn,
+                newCopies: [{ "status": "in_library" }]
+            }
+        }).then(response => {
+            let updatedBook = selectedBook;
+            updatedBook.copies = response.data.copies;
+            setSelectedBook(""); // en saanut tuota tekstiä muuttumaan enkä useeffectiä triggeröitymään ilman tätä :|
+            setSelectedBook(updatedBook);
+        });
     }
 
     const handleChange = (e) => {
@@ -74,11 +87,13 @@ const Admin = (props) => {
                             )}
                         </select>
                         <Button className="delete" my={2}>Delete Book</Button>
-                        <Button className="add" mx={2}>Add a copy</Button>
+                        <Button className="add" mx={2} onClick={addCopy}>Add a copy</Button>
                 </Box>
                 <div id="selectedBook">
                     <p>Title: {selectedBook && selectedBook.title}</p>
                     <p>ISBN: {selectedBook && selectedBook.isbn}</p>
+                    <p>Copies: {selectedBook && selectedBook.copies && selectedBook.copies.length}</p>
+                    
                 </div>
                 <Box
                     as="form"
