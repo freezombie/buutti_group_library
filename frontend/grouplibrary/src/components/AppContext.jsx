@@ -18,7 +18,8 @@ export class AppContextProvider extends Component {
             user: JSON.parse(localStorage.getItem("user")) || {},
             token: localStorage.getItem("token") || "",
             borrowed_books: [],
-            borrow_history: []
+            borrow_history: [],
+            reserved_books: []
         }
     }
 

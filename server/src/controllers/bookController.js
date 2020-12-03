@@ -29,7 +29,7 @@ export const newBook = async (req, res) => {
         });
     });
     await book.save();
-    res.json(book);
+    res.status(200).json(book);
 }
 
 export const searchBook = async (req, res) => {
