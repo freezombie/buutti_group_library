@@ -6,6 +6,7 @@ import "./book.css";
 
 function Book (props) {
     const { isbn, title, author, img, published, description} = props.data;
+    // pitäs olla Date.getday jne kautta. eli new date 
     const year = published.slice(0, 4);
     const month = published.slice(5,7);
     const day = published.slice(8,10);
