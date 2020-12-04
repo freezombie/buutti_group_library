@@ -21,7 +21,7 @@ const Admin = (props) => {
         if(props.user.role!=="admin") {
             history.push("/");
         }
-    } else if (!props.token) {
+    } else if (!props.token || (props.user && props.user.role !== "admin")) {
         history.push("/");
     }
 
@@ -54,6 +54,7 @@ const Admin = (props) => {
             }
         }).then(response => {
             let updatedBook = selectedBook;
+            //const newBook = {...selectedBook, response.data.copies}
             updatedBook.copies = response.data.copies;
             setSelectedBook(""); // en saanut tuota tekstiä muuttumaan enkä useeffectiä triggeröitymään ilman tätä :|
             setSelectedBook(updatedBook);
@@ -79,6 +80,36 @@ const Admin = (props) => {
             const mergedArray = adminData.concat(customerData);
             setSelectedUser(mergedArray.find( ({ email }) => email=== e.target.value));
         }
+    }
+
+    const toggleAdmin = (e) => {
+        e.preventDefault();
+        const newRole = (selectedUser.role === "customer") ? "admin" : "customer";
+        adminAxios({
+            method: "put",
+            url: `${URL}/users/changerole`,
+            data: {
+                email: selectedUser.email,
+                newRole: newRole
+            }
+        }).then(response => {
+            console.log(response);
+            if(response.status = 200) {
+                const updatedUser = {...selectedUser, role: newRole};
+                setSelectedUser(updatedUser);
+                if(newRole === "admin") {
+                    const newCustomerData = customerData.filter(user => user.email !== updatedUser.email);
+                    const newAdminData = [...adminData, updatedUser];
+                    setCustomerData(newCustomerData);
+                    setAdminData(newAdminData);
+                } else {
+                    const newAdminData = adminData.filter(user => user.email !== updatedUser.email);
+                    const newCustomerData = [...customerData, updatedUser];
+                    setAdminData(newAdminData);
+                    setCustomerData(newCustomerData);
+                }
+            }
+        });
     }
 
     return(
@@ -123,7 +154,7 @@ const Admin = (props) => {
                             </optgroup>
                         </select>
                         <Button className="delete" my={2}>Delete User</Button>
-                        <Button className="add" mx={2}>Make Admin</Button>
+                        <Button className="add" mx={2} onClick={toggleAdmin}>{selectedUser && selectedUser.role === "customer" ? "Make Admin" : "Demote Admin"}</Button>
                 </Box>
                 <div id="selectedUser">
                     <p>Name: {selectedUser && selectedUser.name}</p>

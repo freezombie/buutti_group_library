@@ -187,15 +187,46 @@ export const borrowBook = async (req, res) => {
 };
 
 export const returnBook = async (req, res) => { 
-const user = await userModel.findOne({ email: req.body.email });
-if (user) {
-const book = await user.borrowed_books.findOneAndRemove(book => book.isbn === req.body.isbn);
+    const user = await userModel.findOne({ email:req.body.email });
+    const book = await bookModel.findOne({ isbn: req.body.isbn });
+    const isbn = book.isbn;
 
-if (book) {
-res.status(201).json("Borrowed book returned");
+    if (user) {
+
+        let borrowedBook = await user.borrowed_books.find((borrowedBook) => borrowedBook.isbn === isbn);
+        const id = borrowedBook.copyID;
+
+        if (borrowedBook) { 
+                await bookModel.findOneAndUpdate(id, book.copies, {status: "in_library"}, (err,obj) => {  
+                console.log(book.copies);
+                book.save();
+                if (err) throw err;
+                console.log("copy statues changed to in_library");
+            }); 
+        
+            user.borrowed_books.remove(borrowedBook.copyID);
+            await user.save();
+        
+            if (user.removeCount === 1) {
+                console.log("book returned");
+            }else {
+                console.log("A mistake has happened in returning the book. try again");
+            }
+
+            } else {
+                res.status(200).json("No such book FOUND!!!");
+        }
+    }
 }
-res.status(200).json("No such book FOUND!!!");
-}
-
-
+// tästä ei ole esimerkki requestiä.
+export const changeRole = async (req,res) => {
+    await userModel.findOneAndUpdate({ email:req.body.email },
+                                    { role: req.body.newRole },
+                                    { new: true }, (err, user) =>{
+                                        if(err){
+                                            return res.json(err);
+                                        } else {
+                                            return res.status(200).json(user)
+                                        }
+                                    });
 }

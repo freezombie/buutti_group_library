@@ -1,6 +1,6 @@
 import express from "express";
 import {
-    newUser, allUsers, editUser, removeUser, borrowBook, returnBook, loginUser,
+    newUser, allUsers, editUser, removeUser, borrowBook, returnBook, loginUser, changeRole
 } from "../controllers/userController.js";
 
 const userRouter = express.Router();
@@ -11,5 +11,6 @@ userRouter.put("/users/edit", editUser);
 userRouter.delete("/users/delete", removeUser);
 userRouter.put("/users/borrow", borrowBook);
 userRouter.post("/users/return", returnBook);
+userRouter.put("/changerole", changeRole);
 //userRouter.post("/login", loginUser);
 export default userRouter;
